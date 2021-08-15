@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.Indoera.ecomProject.Products.Entity.ProductsCategory;
 import com.Indoera.ecomProject.Products.Service.ProductCategoryService;
+import com.Indoera.ecomProject.Utils.Utils;
 
 /**
  * @author shiva
@@ -36,6 +37,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 	}	
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<ProductsCategory> productsCategoryList(List<String> errorList) {
@@ -48,8 +50,27 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 			e.printStackTrace();
 		}
 //		logger.info("List of Countries Returned nby the MEthod is "+ allCountries ) ;
-		logger.info("Products Category List :: " + productCategories);
+//		logger.info("Products Category List :: " + productCategories);
 		return productCategories;
+	
 	}
+
+	@Transactional
+	@Override
+	public void saveProducts(String products) {
+		ProductsCategory prod = new ProductsCategory(products);
+		try {
+			if(Utils.isNotNull(products)) {
+				prod.setCategoryName(products);
+				entityManager.merge(prod);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	
 
 }

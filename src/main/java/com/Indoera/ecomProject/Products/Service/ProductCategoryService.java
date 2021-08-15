@@ -16,5 +16,5 @@ public interface ProductCategoryService {
 
 	public List<ProductsCategory> productsCategoryList(List<String> errorList);
 	
-	
+	public void saveProducts(String products);
 }

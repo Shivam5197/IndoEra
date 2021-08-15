@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +29,7 @@ import com.Indoera.ecomProject.Utils.Utils;
  * Package  com.Indoera.ecomProject.Products.Controller
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/products")
 public class ProductServiceController {
 
 	private static final Logger logger = LogManager.getLogger(ProductServiceController.class);
@@ -55,6 +58,28 @@ public class ProductServiceController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+//		logger.info(apiResponseModel);
 		return apiResponseModel;
 	}
+		
+	
+	@RequestMapping(value = "/saveProductsforMap", method = {RequestMethod.GET,RequestMethod.POST})
+	public APIResponseModal saveProducts(@RequestBody String products) {
+			logger.info("ProductCame to be saved ??"+products);
+		APIResponseModal apiResponseModel = new Utils().getDefaultApiResponse();
+		try {
+			productCategoryService.saveProducts(products);
+			apiResponseModel.setData(products.toString());
+			apiResponseModel.setMessage("Sucess");
+			apiResponseModel.setStatus(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return apiResponseModel;
+	}
+	
+	
 }

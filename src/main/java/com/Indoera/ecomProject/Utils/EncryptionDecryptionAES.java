@@ -2,12 +2,17 @@
  * 
  */
 package com.Indoera.ecomProject.Utils;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;    
-import javax.crypto.Cipher;  
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.util.Base64;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+
 import javax.crypto.SecretKey;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author shiva
@@ -17,6 +22,10 @@ import javax.crypto.SecretKey;
 
 
 public class EncryptionDecryptionAES {  
+	
+	private static final  Logger logger = LogManager.getLogger(EncryptionDecryptionAES.class);
+	
+	
     static Cipher cipher;  
    static SecretKey secretKey;
 
@@ -36,14 +45,31 @@ public class EncryptionDecryptionAES {
 //
 //    }
 
-    public  String encrypt(String plainText, SecretKey secretKey) throws Exception {
-        byte[] plainTextByte = plainText.getBytes();
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] encryptedByte = cipher.doFinal(plainTextByte);
-        Base64.Encoder encoder = Base64.getEncoder();
-        String encryptedText = encoder.encodeToString(encryptedByte);
-        return encryptedText;
-    
+    public  String encrypt(String plainText, SecretKey secretKey,Cipher cipher) throws Exception {
+//    	logger.info("Plain Text In Encrypt :" + plainText);
+//    	logger.info("Secret key In Encrypt :" + secretKey);
+//    	logger.info("Value of Cipher is ::::::::::: "+cipher);
+        String encryptedText = "";
+		try {
+			byte[] plainTextByte = plainText.getBytes();
+			cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+			byte[] encryptedByte = cipher.doFinal(plainTextByte);
+			Base64.Encoder encoder = Base64.getEncoder();
+			encryptedText = encoder.encodeToString(encryptedByte);
+			  return encryptedText;
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		logger.info("Returened Encrypted Text : : " + encryptedText);
+		return encryptedText;
     }
 
     public  String decrypt(String encryptedText, SecretKey secretKey)

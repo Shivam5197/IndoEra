@@ -365,7 +365,7 @@ function validateZipCodes(zipDetails) {
 
   var rv = {};
   var Division = {};
-	var State = {};
+  var State = {};
   for (var i = 0; i < zipDetails.length; i++) {
     rv = zipDetails[i];
 
@@ -381,7 +381,6 @@ function validateZipCodes(zipDetails) {
 	 for (var i = 0; i < rv.PostOffice.length; i++) {
       Division = rv.PostOffice[2].Division;
 	 State= rv.PostOffice[2].State;
-
 	userAddressformFull(zipCode,Division,State);
     }
 	}

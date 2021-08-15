@@ -90,46 +90,6 @@ function resetPosition() {
  }
 
 
-function callPopup(){
-
-let table = `<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>`
-
-
-
-    let popUp = new MainPopUpModal("hello",table,"END IS HERE ");
-	popUp.lg();
-    popUp.show();     
-}
-
-
 function displaySuccessToast(header,message){
 /*	let header = "Failed";
 	let message = "This is the main reason you are getting failed  here ";
@@ -191,7 +151,6 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
-
 
 
 		//loader
