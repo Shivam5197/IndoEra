@@ -19,6 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.Indoera.ecomProject.Products.Entity.ProductsCategory;
 import com.Indoera.ecomProject.Store.Entity.Stores;
 import com.Indoera.ecomProject.Store.Service.StoreService;
 import com.Indoera.ecomProject.UserManagement.Entity.Users;
@@ -32,7 +33,7 @@ public class StoreServiceImpl implements StoreService {
 
 	private static final Logger logger = LogManager.getLogger(StoreServiceImpl.class);
 
-//	@Autowired
+	@Autowired
 	private EntityManager entityManager;
 	
 	EncryptionDecryptionAES encrept = new EncryptionDecryptionAES();
@@ -59,66 +60,55 @@ public class StoreServiceImpl implements StoreService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    }	
-		
-	
-//	@Override
-//	@Transactional
-//	public void saveStore(Stores store,Users user,List<String> errorList,String logoPath) {
-//
-//		try {
-//			if(Utils.isNotNull(store)) {
-//				if(Utils.isNotNull(store.getStoreName())
-//						&Utils.isNotNull(store.getAddress())
-//						&Utils.isNotNull(store.getCountry())
-//						&Utils.isNotNull(store.getCity())
-//						&Utils.isNotNull(store.getStreet())
-//						&Utils.isNotNull(store.getStoreOpenTime())
-//						&Utils.isNotNull(store.getZipCode())
-//						&Utils.isNotNull(store.getStoreDescription())
-//						) {
-//					store.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
-//					store.setStoreOwner(user);
-//					store.setUniqueStoreCode(store.getStoreName().substring(0,2)+Utils.RandomAlphaString());
-//					store.setStoreStatus(Constants.storeStatus.OPEN);
-//					store.setLogoURL(logoPath);
-//					entityManager.merge(store);
-//				}else {
-//					errorList.add("Please Enter required Details !");
-//				}
-//			}else {
-//				errorList.add("Please Enter required Details !");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			logger.info("Exception Occured in Save Store Method : " + e.getMessage());
-//			errorList.add("Error Occured at our End we are Sorry !! Please try again later");
-//		}
-//	}
+	    }
+	    
+	    public SecretKey generateSecretKey() {
+	    	logger.info("---------------Generate Seceret key called Here ");
+	    	try {
+	    		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+				keyGenerator.init(128); // block size is 128bits
+				 secretKey = keyGenerator.generateKey();
+				cipher = Cipher.getInstance("AES"); //SunJCE provider AES algorithm, mode(optional) and padding schema(optional)  
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	logger.info("--------------- Seceret key returned :  "+ secretKey);
+	    	logger.info("--------------- Seceret key returned :  "+ cipher);
+	    	
 
-	
-//	private String StoreAccountHolderName;
-	
+	    	return secretKey;
+	    }
+	    
+	    
+	    
+	    
+				
 	@Override
 	@Transactional
 	public void saveStore(Stores store, Users user, List<String> errorList, String logoPath) {
-
 		try {
 			if(Utils.isNotNull(user)) {
 				if(Utils.isNotNull(store.getStoreName()) && 
 						Utils.isNotNull(store.getStoreEmail()) &&
 						Utils.isNotNull(store.getAddress()) && 
-						Utils.isNotNull(store.getCountry()) && 
 						Utils.isNotNull(store.getCity()) &&
 						Utils.isNotNull(store.getState()) &&
-						Utils.isNotNull(store.getZipCode())&& 
-						Utils.isNotNull(store.getProductSellCategory())) {
+						Utils.isNotNull(store.getZipCode())) {
 
-					if(Utils.isNotNull(store.getLogoURL())) {
+					if(store.getProductSellCategory()==null && store.getProductCategoryId()!=null) {
+						store.setProductSellCategory(entityManager.find(ProductsCategory.class,store.getProductCategoryId()));
+					}
+					
+					if(Utils.isNotNull(logoPath)) {
 						store.setLogoURL(logoPath);
-					}else {
+						}else {
 						store.setLogoURL(null);
 					}
+					
 					if(Utils.isNotNull(store.getStoreDescription())) {
 						store.setStoreDescription(store.getStoreDescription());
 					}else {
@@ -129,25 +119,37 @@ public class StoreServiceImpl implements StoreService {
 					}else {
 						store.setStoreAccountHolderName(null);
 					}
+					if(Utils.isNotNull(store.getBankAccountType())) {
+						store.setBankAccountType(store.getBankAccountType());
+					}else {
+						store.setBankAccountType(null);
+					}
 					if(Utils.isNotNull(store.getGstinNumber())) {
-						store.setGstinNumber(encrept.encrypt(store.getGstinNumber(), secretKey));//Key Related Issues will come from Here
+						store.setGstinNumber(encrept.encrypt(store.getGstinNumber(), generateSecretKey(),cipher));//Key Related Issues will come from Here
 					}else {
 						store.setGstinNumber(null);
 					}
 					if(Utils.isNotNull(store.getStoreAccountNumber())) {
-						store.setStoreAccountNumber(encrept.encrypt(store.getStoreAccountNumber(), secretKey));//Key Related Issues will come from Here
+						store.setStoreAccountNumber(encrept.encrypt(store.getStoreAccountNumber(), generateSecretKey(),cipher));//Key Related Issues will come from Here
 					}else {
 						store.setStoreAccountNumber(null);
 					}
+					if(Utils.isNotNull(store.getSellerPanNumber())) {
+						store.setSellerPanNumber(store.getSellerPanNumber());
+					}else {
+						store.setSellerPanNumber(null);
+					}
+					
 					store.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
 					store.setStoreOwner(user);
 					store.setUniqueStoreCode(store.getStoreName().substring(0,2)+Utils.RandomAlphaString());
 					store.setStoreStatus(Constants.storeStatus.OPEN);
+					store.setCountry("India");
 					
 					entityManager.merge(store);
-					
 				}else {
 					errorList.add("Please Enter Required Data");
+					logger.info("Something is missing");
 				}
 			}else {
 				errorList.add("Session timed out Please Login agian !!");

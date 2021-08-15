@@ -27,19 +27,16 @@
 
 <script>
 
-//loader
 function toggleSpinnerOn(){    
-		$(".signUpCard").css("opacity","0.5");
-		$(".processingLoader").show();
+	$(".processingLoader").show();
+	$("#workSpace").css("opacity","0.5");
 }
 function toggleSpinnerOff(){
-		$(".processingLoader").hide();	    
-		$(".signUpCard").css("opacity","1");
+	$(".processingLoader").hide();	    
+	$("#workSpace").css("opacity","5");
 }
 
-$(document).ready( function () {
-    $('#myTable').DataTable();
-} );
+
 
 </script>
 

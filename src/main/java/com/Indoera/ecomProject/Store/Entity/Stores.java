@@ -10,8 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.Indoera.ecomProject.Products.Entity.ProductsCategory;
 import com.Indoera.ecomProject.UserManagement.Entity.Users;
@@ -50,20 +50,28 @@ public class Stores {
 	private String storeEmail;
 	@Column(name="gstin_number")
 	private String gstinNumber;
+	@Column(name="seller_pan_number")
+	private String sellerPanNumber;
 	@Column(name="store_bank_account_holder_name")
 	private String storeAccountHolderName;
 	@Column(name="store_bank_number")
 	private String storeAccountNumber;
 
+	@Column(name = "store_bank_account_type")
+	private Integer bankAccountType;
+	
+	
 	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name = "store_owner")
 	private Users storeOwner;
 	
 	
-	@OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name = "selling_producsts_category")
+	@ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinColumn(name = "selling_products_category")
 	private ProductsCategory productSellCategory;
 	
+	@Transient
+	private Integer productCategoryId;
 	
 	//Empty constructor
 	public Stores() {
@@ -72,19 +80,25 @@ public class Stores {
 	
 	//DTO Constructur
 	public Stores(StoresDTO storeDto) {
-		this.storeDescription = storeDto.getStoreDescription();
 		this.storeName = storeDto.getStoreName();
-		this.country = storeDto.getCountry();
 		this.city = storeDto.getCity();
 		this.state = storeDto.getState();
+		this.storeDescription = storeDto.getStoreDescription();
 		this.address = storeDto.getAddress();
 		this.zipCode = storeDto.getZipCode();
+		this.bankAccountType =storeDto.getAccountType();
+		this.storeAccountHolderName = storeDto.getStoreAccountHolderName();
+		this.sellerPanNumber = storeDto.getSellerPanNumber();
+		this.storeAccountNumber = storeDto.getStoreAccountNumber();
+		this.gstinNumber = storeDto.getGstinNumber();
+		this.storeEmail = storeDto.getStoreEmail();
+		this.productCategoryId = storeDto.getProductCategory();
 	}
 
 	//Constructor using fields
 	public Stores(String storeName, String uniqueStoreCode, String country, String city, String state, String address,
 			Integer zipCode, String storeDescription, Timestamp addedAt, String logoURL, Integer storeStatus,
-			String storeEmail, String gstinNumber, String storeAccountHolderName, String storeAccountNumber) {
+			String storeEmail, String gstinNumber, String storeAccountHolderName, String storeAccountNumber,Integer bankAccountType,String sellerPanNumber) {
 		this.uniqueStoreCode = uniqueStoreCode;
 		this.country = country;
 		this.city = city;
@@ -99,6 +113,8 @@ public class Stores {
 		this.gstinNumber = gstinNumber;
 		this.storeAccountHolderName = storeAccountHolderName;
 		this.storeAccountNumber = storeAccountNumber;
+		this.bankAccountType = bankAccountType;
+		this.sellerPanNumber = sellerPanNumber;
 	}
 	
 	public Integer getId() {
@@ -237,6 +253,14 @@ public class Stores {
 		this.storeOwner = storeOwner;
 	}
 	
+	public Integer getProductCategoryId() {
+		return productCategoryId;
+	}
+
+	public void setProductCategoryId(Integer productCategoryId) {
+		this.productCategoryId = productCategoryId;
+	}
+
 	public ProductsCategory getProductSellCategory() {
 		return productSellCategory;
 	}
@@ -244,8 +268,22 @@ public class Stores {
 	public void setProductSellCategory(ProductsCategory productSellCategory) {
 		this.productSellCategory = productSellCategory;
 	}
+	public Integer getBankAccountType() {
+		return bankAccountType;
+	}
 
+	public void setBankAccountType(Integer bankAccountType) {
+		this.bankAccountType = bankAccountType;
+	}
 	
+	public String getSellerPanNumber() {
+		return sellerPanNumber;
+	}
+
+	public void setSellerPanNumber(String sellerPanNumber) {
+		this.sellerPanNumber = sellerPanNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "{\"id\":\"" + id + "\", \"storeName\":\"" + storeName + "\", \"uniqueStoreCode\":\"" + uniqueStoreCode
@@ -253,9 +291,26 @@ public class Stores {
 				+ "\", \"address\":\"" + address + "\", \"zipCode\":\"" + zipCode + "\", \"storeDescription\":\""
 				+ storeDescription + "\", \"addedAt\":\"" + addedAt + "\", \"logoURL\":\"" + logoURL
 				+ "\", \"storeStatus\":\"" + storeStatus + "\", \"storeEmail\":\"" + storeEmail
-				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"storeAccountHolderName\":\"" + storeAccountHolderName
-				+ "\", \"storeAccountNumber\":\"" + storeAccountNumber + "\", \"storeOwner\":\"" + storeOwner
-				+ "\", \"productSellCategory\":\"" + productSellCategory + "\"}";
+				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"sellerPanNumber\":\"" + sellerPanNumber
+				+ "\", \"storeAccountHolderName\":\"" + storeAccountHolderName + "\", \"storeAccountNumber\":\""
+				+ storeAccountNumber + "\", \"bankAccountType\":\"" + bankAccountType + "\", \"storeOwner\":\""
+				+ storeOwner + "\", \"productSellCategory\":\"" + productSellCategory + "\"}";
 	}
 
+//	@Override
+//	public String toString() {
+//		return "{\"id\":\"" + id + "\", \"storeName\":\"" + storeName + "\", \"uniqueStoreCode\":\"" + uniqueStoreCode
+//				+ "\", \"country\":\"" + country + "\", \"city\":\"" + city + "\", \"state\":\"" + state
+//				+ "\", \"address\":\"" + address + "\", \"zipCode\":\"" + zipCode + "\", \"storeDescription\":\""
+//				+ storeDescription + "\", \"addedAt\":\"" + addedAt + "\", \"logoURL\":\"" + logoURL
+//				+ "\", \"storeStatus\":\"" + storeStatus + "\", \"storeEmail\":\"" + storeEmail
+//				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"storeAccountHolderName\":\"" + storeAccountHolderName
+//				+ "\", \"storeAccountNumber\":\"" + storeAccountNumber + "\", \"storeOwner\":\"" + storeOwner
+//				+ "\", \"productSellCategory\":\"" + productSellCategory + "\"}";
+//	}
+
+	
+	
+	
+	
 }

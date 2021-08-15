@@ -30,5 +30,15 @@ public class Constants {
 
 	}
 	
+	public static class BankAccountTypes{
+		public static final int SAVINGS =0;
+		public static final int CURRENT =1;
+		public static final int RECURRING  =2;
+		
+		
+		
+	}
+	
+	
 	
 }

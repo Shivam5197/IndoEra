@@ -4,6 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +20,9 @@ import com.Indoera.ecomProject.Utils.Utils;
 @Controller
 @RequestMapping("/Indoera")
 public class MainController {
-
-	public static final Logger logger = LogManager.getLogger(MainController.class);
 	
+	public static final Logger logger = LogManager.getLogger(MainController.class);
+			
 	@RequestMapping("/home")
 	public String view() {
 		return "home";

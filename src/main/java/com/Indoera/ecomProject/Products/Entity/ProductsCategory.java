@@ -31,7 +31,7 @@ public class ProductsCategory {
 	}
 
 	
-	ProductsCategory(String categoryName) {
+	public ProductsCategory(String categoryName) {
 		super();
 		this.categoryName = categoryName;
 	}
@@ -48,7 +48,12 @@ public class ProductsCategory {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
+
+
+	@Override
+	public String toString() {
+		return "{\"productCatId\":\"" + productCatId + "\", \"categoryName\":\"" + categoryName + "\"}";
+	}
 	
 	
 	

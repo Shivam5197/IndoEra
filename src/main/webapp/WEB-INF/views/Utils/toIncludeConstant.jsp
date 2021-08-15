@@ -35,12 +35,24 @@
 <c:set var="feMaleUser" value="<%= Gender.FEMALE%>" scope="page" />
 <c:set var="otherUser" value="<%= Gender.OTHER%>" scope="page" />
 
+
+
+
+
 <script>
 var _const_userRoles = {
 		slt_admin : "<%=Constants.userRole.ADMIN%>",
 		store_owner : "<%=Constants.userRole.STOREOWNER%>",
 		customer : "<%=Constants.userRole.CUSTOMER%>",
 }
+
+var _bankAccountTypes ={
+		savings_account : "<%=Constants.BankAccountTypes.SAVINGS%>",
+		current_account : "<%=Constants.BankAccountTypes.CURRENT%>",
+		recurring_account : "<%=Constants.BankAccountTypes.RECURRING%>",		
+}
+
+
 </script>
 
 </body>

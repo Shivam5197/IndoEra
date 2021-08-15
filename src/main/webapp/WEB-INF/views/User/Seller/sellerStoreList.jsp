@@ -5,7 +5,7 @@
             <div class="col-md-12">
           <div class="card">
           
-	<button onclick="storeForm();" class="btn btn-primary" style="width: 10%;">New Store</button>          
+	<button onclick="storeAddForm();" class="btn btn-primary" style="width: 10%;">New Store</button>          
           </div>
                    </div>
                   </div>

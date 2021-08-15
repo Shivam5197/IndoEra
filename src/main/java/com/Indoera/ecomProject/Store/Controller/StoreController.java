@@ -70,6 +70,8 @@ public class StoreController {
 	@ResponseBody
 	@RequestMapping(value = "/saveStore" , method = {RequestMethod.POST})
 	public APIResponseModal saveStore(@ModelAttribute StoresDTO store,HttpSession session) throws BindException {
+//		logger.info("Store DEtails Populated from frontend are : " + store);
+		
 		Stores storeModal  = new Stores();
 		String logopath = "";
 		APIResponseModal apiResponse = new Utils().getDefaultApiResponse();

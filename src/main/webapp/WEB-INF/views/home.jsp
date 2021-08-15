@@ -272,7 +272,9 @@ font-family: initial;
 
         <ul class="list-unstyled">
           <li>
-            <a href="#!">Link 1</a>
+				<input type="text" id="productListID">
+				<button class="btn" onclick="saveP()" style="background-color: white; ">Save Product</button>
+
           </li>
           <li>
             <a href="#!">Link 2</a>
@@ -302,6 +304,43 @@ font-family: initial;
 
 </footer>
 <!-- Footer -->
+
+<script>
+function saveP(){
+	console.log("Save PROD");
+	let prod = document.getElementById("productListID").value;
+	console.log("PROD"+ prod);
+	var obj = new MasterAjax();
+	obj.requestType = "POST";
+	obj.url = "products/saveProductsforMap";
+	obj.data = prod;
+	obj.contentType = false;
+    obj.processData = false;
+	obj.dataType= "application/json";
+	obj.requestData(function(responseData){
+		if(responseData.status == "OK" || responseData.status == "ok"){
+			swal({
+				  title: "Congrats !",
+				  text: responseData.message,
+				  icon: "success",
+				  button: "OK",
+		});	
+	
+		}else{
+			console.log(responseData)
+			swal({
+				 title: "Failed !",
+ 				  text: responseData.message,
+ 				  icon: "warning",
+			   	 dangerMode: true,	
+				  button: "OK",
+		});	
+	
+		}
+	});	
+}
+
+</script>
 
 
 	<script

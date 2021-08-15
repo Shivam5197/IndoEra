@@ -26,11 +26,13 @@ public class StoresDTO {
 	private String gstinNumber;
 	private String StoreAccountHolderName;
 	private String storeAccountNumber;
+	private Integer accountType;
 	private MultipartFile logoFile;
+	private String sellerPanNumber;
 	
 	private Users storeOwner;
 
-	private ProductsCategory productCategory;
+	private Integer productCategory;
 	
 	public Integer getId() {
 		return id;
@@ -174,12 +176,27 @@ public class StoresDTO {
 		this.storeOwner = storeOwner;
 	}
 
-	public ProductsCategory getProductCategory() {
+	public Integer getProductCategory() {
 		return productCategory;
 	}
 
-	public void setProductCategory(ProductsCategory productCategory) {
+	public void setProductCategory(Integer productCategory) {
 		this.productCategory = productCategory;
+	}
+	public Integer getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(Integer accountType) {
+		this.accountType = accountType;
+	}
+	
+	public String getSellerPanNumber() {
+		return sellerPanNumber;
+	}
+
+	public void setSellerPanNumber(String sellerPanNumber) {
+		this.sellerPanNumber = sellerPanNumber;
 	}
 
 	@Override
@@ -190,8 +207,9 @@ public class StoresDTO {
 				+ storeDescription + "\", \"addedAt\":\"" + addedAt + "\", \"logoURL\":\"" + logoURL
 				+ "\", \"storeStatus\":\"" + storeStatus + "\", \"storeEmail\":\"" + storeEmail
 				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"StoreAccountHolderName\":\"" + StoreAccountHolderName
-				+ "\", \"storeAccountNumber\":\"" + storeAccountNumber + "\", \"logoFile\":\"" + logoFile
+				+ "\", \"storeAccountNumber\":\"" + storeAccountNumber + "\", \"accountType\":\"" + accountType
+				+ "\", \"logoFile\":\"" + logoFile + "\", \"sellerPanNumber\":\"" + sellerPanNumber
 				+ "\", \"storeOwner\":\"" + storeOwner + "\", \"productCategory\":\"" + productCategory + "\"}";
 	}
-
+	
 }
