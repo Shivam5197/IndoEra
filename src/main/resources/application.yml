@@ -1,5 +1,3 @@
 twilio:
-    account_sid: ACfc0db83ecf359067cb7289850db42237 
-    auth_token: 01f93e300504d49ea2ca412f9eb76045
     trail_Number: +16507638297
     service_id: VA7071ecc08b1dae943404517726231f5e

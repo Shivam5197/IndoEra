@@ -21,7 +21,7 @@ function saveBasicInforMation(){
 }
 
 function userDetailsForm() {
-alert("Update Phone Verification PART FIRST !!! GO TO LINE 248 and 219 And ALSO UPDATE THE API AUTH  FROM TWIllio as Your accont is not working you have shared the Auth on Github Smart boy !");
+alert("Message will not be sent to your Phone for now As I am using Free twillio Account and it only allows me to send few Messages so I have Blocked it from Code.It can be restart just remove comment from SendSellerOTP() Function and verifyOTP() Function !! Thank You ");
 
     var card = `
   <div class="row">
@@ -210,11 +210,11 @@ function SendSellerOTP() {
         obj.requestData(function(responseData) {
             if (responseData.status == "OK" || responseData.status == "ok") {
                 displaySuccessToast("Success !", responseData.message);
-                otpInputField();
+//                otpInputField();//Remove this this is here to save $ on Twillio account 
             } else {
                 displayFailedToast("Failed", responseData.message)
                 console.log(responseData)
-//                otpInputField();//Remove this this is here to save $ on Twillio account 
+                otpInputField();
             }
         });
     } else {
@@ -237,11 +237,11 @@ function verifyOTP(){
         obj.requestData(function(responseData) {
             if (responseData.status == "OK" || responseData.status == "ok") {
                 displaySuccessToast("Success !", responseData.message);
-				NumberVerified();
+//				NumberVerified();// NEED TO REMOVE THIS TO STOP THE PROCESS 
             } else {
                 displayFailedToast("Failed", responseData.message)
                 console.log(responseData)
-//				NumberVerified(); // NEED TO REMOVE THIS TO STOP THE PROCESS 
+				NumberVerified(); 
             }
         });
     } else {
