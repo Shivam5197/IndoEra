@@ -707,6 +707,24 @@ function saveSellerInfo(){
 
 
 
+/*function checkSellerUserName(){
+	console.log("I am Called");
+	let phone = document.getElementById("sellerUserName").value;
+	var obj = new MasterAjax();
+	obj.requestType = "POST";
+	obj.url = "indoUser/validate-usNa";
+	obj.data = phone;
+	obj.contentType = false;
+    obj.processData = false;
+	obj.dataType= "application/json";
+	obj.requestData(function(responseData){
+		if(responseData.status == "OK" || responseData.status == "ok"){
+		}else{
+			console.log(responseData)
+//			displayFailedToast("Failed",responseData.message)
+		}
+	});	
+}
 
-
+*/
 

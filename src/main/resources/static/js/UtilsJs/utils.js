@@ -163,6 +163,21 @@ function sleep(milliseconds) {
 				$("#workSpace").css("opacity","1");
 		}
 
+function _isNull (object){
+	if(undefined != object && null != object){  
+		return false;
+	}else{
+		return true; 
+	}
+}
 
+
+function _isEmpty(object){
+	if(undefined != object && null != object && object.length > 0){  
+		return false; 
+	}else{
+		return true; 
+	}
+}
 
 

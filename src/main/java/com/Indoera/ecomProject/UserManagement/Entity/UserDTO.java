@@ -3,11 +3,6 @@
  */
 package com.Indoera.ecomProject.UserManagement.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  * @author shiva
  * Added on 14-May-2021

@@ -46,10 +46,9 @@ public class StoreController {
 		List<Stores> stores = new ArrayList<Stores>();
 		stores = storeService.getAllStores();
 		theModel.addAttribute("storeList",stores);
-		return "Store/storeList";
+		return "User/test";
 	}
 	
-
 	@RequestMapping(value = "/storeFormshow" ,method = RequestMethod.GET)
 	public String addStoreForm(Model theModel, HttpSession session) {
 		Users user = (Users) session.getAttribute("loggedInUser");
@@ -66,11 +65,11 @@ public class StoreController {
 			return "redirect:/Indoera/home";
 		}
 	}
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/saveStore" , method = {RequestMethod.POST})
 	public APIResponseModal saveStore(@ModelAttribute StoresDTO store,HttpSession session) throws BindException {
-//		logger.info("Store DEtails Populated from frontend are : " + store);
 		
 		Stores storeModal  = new Stores();
 		String logopath = "";

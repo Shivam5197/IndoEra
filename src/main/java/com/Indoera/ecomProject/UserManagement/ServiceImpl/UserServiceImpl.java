@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.Indoera.ecomProject.UserManagement.ServiceImpl;
 
 import java.util.List;
@@ -69,31 +66,6 @@ public class UserServiceImpl implements UserService {
 				}else {
 					errorList.add("Password is required !");
 				}
-				if(Utils.isNotNull(userDto.getCountry())) {
-					user.setCountry(userDto.getCountry());
-				}else {
-					errorList.add("Country is required !");
-				}
-				if(Utils.isNotNull(userDto.getState())) {
-					user.setState(userDto.getState());
-				}else {
-					errorList.add("State is required !");
-				}
-				if(Utils.isNotNull(userDto.getCity())) {
-					user.setCity(userDto.getCity());
-				}else {
-					errorList.add("City is required !");
-				}
-				if(Utils.isNotNull(userDto.getZipCode())) {
-					user.setZipCode(userDto.getZipCode());
-				}else {
-					errorList.add("ZipCode is required !");
-				}
-				if(Utils.isNotNull(userDto.getAddress())) {
-					user.setAddress(userDto.getAddress());
-				}else {
-					errorList.add("Address is required !");
-				}
 				if(Utils.isNotNull(userDto.getPhoneNumber())) {
 					user.setPhoneNumber("+"+userDto.getPhoneNumber());
 				}else {
@@ -109,6 +81,36 @@ public class UserServiceImpl implements UserService {
 				}else {
 					user.setGender(null);
 				}
+				
+				if(Utils.isNotNull(userDto.getRole()) && userDto.getRole().equals(Constants.userRole.STOREOWNER)) {
+					logger.info("Store OWner  hai");
+					if(Utils.isNotNull(userDto.getCountry())) {
+						user.setCountry(userDto.getCountry());
+					}else {
+						errorList.add("Country is required !");
+					}
+					if(Utils.isNotNull(userDto.getState())) {
+						user.setState(userDto.getState());
+					}else {
+						errorList.add("State is required !");
+					}
+					if(Utils.isNotNull(userDto.getCity())) {
+						user.setCity(userDto.getCity());
+					}else {
+						errorList.add("City is required !");
+					}
+					if(Utils.isNotNull(userDto.getZipCode())) {
+						user.setZipCode(userDto.getZipCode());
+					}else {
+						errorList.add("ZipCode is required !");
+					}
+					if(Utils.isNotNull(userDto.getAddress())) {
+						user.setAddress(userDto.getAddress());
+					}else {
+						errorList.add("Address is required !");
+					}
+				}
+				
 				user.setUniqueUserId(userDto.getUserName().substring(0,2)+Utils.RandomAlphaString());
 				user.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
 				user.setStatus(Constants.userStatus.ACTIVE);

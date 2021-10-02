@@ -55,22 +55,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 	
 	}
 
-	@Transactional
-	@Override
-	public void saveProducts(String products) {
-		ProductsCategory prod = new ProductsCategory(products);
-		try {
-			if(Utils.isNotNull(products)) {
-				prod.setCategoryName(products);
-				entityManager.merge(prod);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
 	
 
 }

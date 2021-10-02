@@ -26,8 +26,8 @@ $(document).ready(function(){
 });
 
 function checkUser(user){
-		console.log("Check USer");
-		console.log(user);
+//		console.log("Check USer");
+//		console.log(user);
 		let nav ="";
 		if(user !=null){
 	 nav = `<div class="col-sm-2 p-3">

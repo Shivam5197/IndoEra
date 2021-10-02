@@ -45,7 +45,7 @@ public class CountriesServcieImpl implements CountriesService{
 			e.printStackTrace();
 		}
 
-//		logger.info("List of Countries Returned nby the MEthod is "+ allCountries ) ;
+		//		logger.info("List of Countries Returned nby the MEthod is "+ allCountries ) ;
 		return allCountries;
 	}
 

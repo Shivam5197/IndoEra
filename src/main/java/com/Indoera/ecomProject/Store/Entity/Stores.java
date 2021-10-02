@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.Hibernate;
+
 import com.Indoera.ecomProject.Products.Entity.ProductsCategory;
 import com.Indoera.ecomProject.UserManagement.Entity.Users;
 
@@ -284,18 +286,6 @@ public class Stores {
 		this.sellerPanNumber = sellerPanNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "{\"id\":\"" + id + "\", \"storeName\":\"" + storeName + "\", \"uniqueStoreCode\":\"" + uniqueStoreCode
-				+ "\", \"country\":\"" + country + "\", \"city\":\"" + city + "\", \"state\":\"" + state
-				+ "\", \"address\":\"" + address + "\", \"zipCode\":\"" + zipCode + "\", \"storeDescription\":\""
-				+ storeDescription + "\", \"addedAt\":\"" + addedAt + "\", \"logoURL\":\"" + logoURL
-				+ "\", \"storeStatus\":\"" + storeStatus + "\", \"storeEmail\":\"" + storeEmail
-				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"sellerPanNumber\":\"" + sellerPanNumber
-				+ "\", \"storeAccountHolderName\":\"" + storeAccountHolderName + "\", \"storeAccountNumber\":\""
-				+ storeAccountNumber + "\", \"bankAccountType\":\"" + bankAccountType + "\", \"storeOwner\":\""
-				+ storeOwner + "\", \"productSellCategory\":\"" + productSellCategory + "\"}";
-	}
 
 //	@Override
 //	public String toString() {
@@ -304,13 +294,35 @@ public class Stores {
 //				+ "\", \"address\":\"" + address + "\", \"zipCode\":\"" + zipCode + "\", \"storeDescription\":\""
 //				+ storeDescription + "\", \"addedAt\":\"" + addedAt + "\", \"logoURL\":\"" + logoURL
 //				+ "\", \"storeStatus\":\"" + storeStatus + "\", \"storeEmail\":\"" + storeEmail
-//				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"storeAccountHolderName\":\"" + storeAccountHolderName
-//				+ "\", \"storeAccountNumber\":\"" + storeAccountNumber + "\", \"storeOwner\":\"" + storeOwner
-//				+ "\", \"productSellCategory\":\"" + productSellCategory + "\"}";
+//				+ "\", \"gstinNumber\":\"" + gstinNumber + "\", \"sellerPanNumber\":\"" + sellerPanNumber
+//				+ "\", \"storeAccountHolderName\":\"" + storeAccountHolderName + "\", \"storeAccountNumber\":\""
+//				+ storeAccountNumber + "\", \"bankAccountType\":\"" + bankAccountType + "\", \"storeOwner\":\""
+//				+ storeOwner + "\", \"productSellCategory\":\"" + productSellCategory + "\", \"productCategoryId\":\""
+//				+ productCategoryId + "\"}";
 //	}
 
 	
-	
-	
+	@Override
+    public String toString() {
+        return "{\"" +(id != null ? "id\":\"" + id + "\" " : "")
+                     +(storeName != null ? ",\"storeName\":\"" + storeName + "\" " : "")
+                     +(uniqueStoreCode != null ? ",\"uniqueStoreCode\":\"" + uniqueStoreCode + "\" " : "")
+                     +(storeDescription != null ? ",\"storeDescription\":\"" + storeDescription + "\" " : "")
+                     +(storeStatus != null ? ",\"storeStatus\":\"" + storeStatus + "\" " : "")
+                     +(gstinNumber != null ? ",\"gstinNumber\":\"" + gstinNumber + "\" " : "")
+                     +(sellerPanNumber != null ? ",\"sellerPanNumber\":\"" + sellerPanNumber + "\" " : "")
+                     +(storeAccountNumber != null ? ",\"storeAccountNumber\":\"" + storeAccountNumber + "\" " : "")
+                     +(country != null ? ",\"country\":\"" + country + "\" " : "")
+                     +(state != null ? ",\"state\":\"" + state + "\" " : "")
+                     +(city != null ? ",\"city\":\"" + city + "\" " : "")
+                     +(address != null ? ",\"address\":\"" + address + "\" " : "")
+                     +(logoURL != null ? ",\"logoURL\":\"" + logoURL + "\" " : "")
+                     +(storeAccountHolderName != null ? ",\"storeAccountHolderName\":\"" + storeAccountHolderName + "\" " : "")
+                     +(bankAccountType != null ? ",\"bankAccountType\":\"" + bankAccountType + "\" " : "")
+                     + (Hibernate.isInitialized(storeOwner) && storeOwner != null ? ",\"storeOwner\":" + storeOwner :"" )
+                     + (Hibernate.isInitialized(productSellCategory) && productSellCategory != null ? ",\"productSellCategory\":" + productSellCategory   : "")
+                     +(addedAt != null ? ",\"addedAt\":\"" + addedAt + "\" " : "")
+                     + "}\t";
+    }		
 	
 }

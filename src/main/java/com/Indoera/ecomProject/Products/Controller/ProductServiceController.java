@@ -63,23 +63,5 @@ public class ProductServiceController {
 	}
 		
 	
-	@RequestMapping(value = "/saveProductsforMap", method = {RequestMethod.GET,RequestMethod.POST})
-	public APIResponseModal saveProducts(@RequestBody String products) {
-			logger.info("ProductCame to be saved ??"+products);
-		APIResponseModal apiResponseModel = new Utils().getDefaultApiResponse();
-		try {
-			productCategoryService.saveProducts(products);
-			apiResponseModel.setData(products.toString());
-			apiResponseModel.setMessage("Sucess");
-			apiResponseModel.setStatus(HttpStatus.OK);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		return apiResponseModel;
-	}
-	
 	
 }
