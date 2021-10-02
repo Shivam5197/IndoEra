@@ -75,6 +75,11 @@ public class Users implements Serializable {
 	@OneToMany(mappedBy = "storeOwner" ,cascade = CascadeType.ALL)
 	private List<Stores> userStores;
 	
+	@OneToMany(mappedBy = "addressOf" ,cascade = CascadeType.ALL)
+	private List<AddressBook> customerAddress;
+	
+	
+	
 	public Users() {
 		
 	}
@@ -271,6 +276,13 @@ public class Users implements Serializable {
 		this.userStores = userStores;
 	}
 
+	public List<AddressBook> getCustomerAddress() {
+		return customerAddress;
+	}
+
+	public void setCustomerAddress(List<AddressBook> customerAddress) {
+		this.customerAddress = customerAddress;
+	}
 
 	@Override
 	public String toString() {
@@ -282,6 +294,7 @@ public class Users implements Serializable {
 				+ "\", \"phoneNumber\":\"" + phoneNumber + "\", \"addedAt\":\"" + addedAt + "\"}";
 	}
 
+		
 	public void store(Stores tempStores) {
 		if(userStores ==null) {
 			userStores = new ArrayList<Stores>();
@@ -290,5 +303,12 @@ public class Users implements Serializable {
 		tempStores.setStoreOwner(this);
 	}
 	
+	public void addAddress(AddressBook tempAdd) {
+		if(customerAddress == null) {
+			customerAddress = new ArrayList<AddressBook>();
+		}
+		customerAddress.add(tempAdd);
+		tempAdd.setAddressOf(this);
+	}	
 	
 }

@@ -1,8 +1,6 @@
 /**
  * 
  */
-
-
 function storeAddForm(){
 	getStoreProductCategoryList();
 	let storeForm = `

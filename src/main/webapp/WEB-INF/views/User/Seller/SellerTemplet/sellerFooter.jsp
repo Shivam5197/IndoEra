@@ -38,8 +38,20 @@ function toggleSpinnerOff(){
 
 
 
+$(document).ready( function () {  
+	console.log("I am Data Table ");
+    $('#storeListUser').DataTable();  
+} )  
+
+
 </script>
 
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"></script>
+
+<!-- 	<script
+		src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+ -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script

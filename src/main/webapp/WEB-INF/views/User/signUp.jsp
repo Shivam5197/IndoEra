@@ -217,7 +217,7 @@
 					</div>
 
 					<div class="row m-1">
-						<div class="col-md-4 ">
+<!-- 						<div class="col-md-4 ">
 							<div class="input_div country input_div_m">
 								
 							</div>
@@ -251,7 +251,7 @@
 								<label for="" class="inputlab">Address</label>
 							</div>
 						</div>
-						<div class="col-md-4">
+ -->						<div class="col-md-4">
 							<div class="input_div phonediv input_div_m">
 								<input type="tel" class="inputTxt" id="phoneNumber" maxlength="15" name="phoneNumber" required="required" placeholder="">
 									 <label for="" class="inputlab">Phone Number</label>

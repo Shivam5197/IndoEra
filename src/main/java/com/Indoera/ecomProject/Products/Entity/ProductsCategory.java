@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
+
 /**
  * @author shiva
  * Added on 13-Jun-2021
@@ -54,9 +56,6 @@ public class ProductsCategory {
 	public String toString() {
 		return "{\"productCatId\":\"" + productCatId + "\", \"categoryName\":\"" + categoryName + "\"}";
 	}
-	
-	
-	
-	
+
 	
 }

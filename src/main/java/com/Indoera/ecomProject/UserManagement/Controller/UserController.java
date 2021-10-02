@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Indoera.ecomProject.UserManagement.Entity.UserDTO;
@@ -30,9 +28,6 @@ import com.Indoera.ecomProject.Utils.APIResponseModal;
 import com.Indoera.ecomProject.Utils.Constants;
 import com.Indoera.ecomProject.Utils.Utils;
 import com.Indoera.ecomProject.Utils.Mail.MailService;
-
-import ch.qos.logback.classic.pattern.Util;
-import net.bytebuddy.implementation.bytecode.Throw;
 
 /**
  * @author shiva
@@ -239,15 +234,23 @@ public class UserController {
 	@RequestMapping(value = "/mailsend",method = {RequestMethod.GET,RequestMethod.POST})
 	public APIResponseModal sendMailToUser(@ModelAttribute UserDTO user, HttpSession session ) {
 		APIResponseModal apiResponse = new Utils().getDefaultApiResponse();
+		List<String> errorList = new ArrayList<String>();
 		try {
 			if(Utils.isNotNull(user)) {
-				mailService.sendMail(user.getEmail(), user.getUserName());
-//				session.setAttribute("loggedInUser", user);
+				mailService.sendMail(user.getEmail(), user.getUserName(),errorList);
+
+				if(!Utils.isNotNull(errorList)) {
 				apiResponse.setMessage("Hello "+user.getFirstName()+" "+user.getLastName()+" We have send you a verification mail to "+user.getEmail()+ " Please Check your Email"
 						+ " to get Access to the Profile !!");
 				apiResponse.setStatus(HttpStatus.OK);		
 				apiResponse.setData(user.toString());
 				session.setAttribute("signUpUser", user);
+				}else {
+					apiResponse.setMessage(errorList.toString());
+					apiResponse.setStatus(HttpStatus.BAD_REQUEST);		
+					apiResponse.setData("");
+				}
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -259,7 +262,7 @@ public class UserController {
 	public String passwordSetPage(Model theModel,HttpSession session) {
 		String returnPath = "";
 		UserDTO user = (UserDTO)session.getAttribute("signUpUser");
-		logger.info("Currentle Logged in user is :" + user);
+//		logger.info("Currentle Logged in user is :" + user);
 		Users us = new Users();
 		if(Utils.isNotNull(user)) {
 			theModel.addAttribute(us);
@@ -332,7 +335,7 @@ public class UserController {
 				//Setting the Blanked Details Here
 				userDto.setCountry("India");
 				userDto.setRole(Constants.userRole.STOREOWNER);
-				logger.info("Updated USer :: " + userDto);
+//				logger.info("Updated USer :: " + userDto);
 				userService.SaveUser(userDto, errorList);
 				if(!Utils.isNotNull(errorList)) {
 					apiResponseModal.setMessage("Your Account is Succesfully Created Please Login using your Entered UserName and Password !! \n You will be "
@@ -363,13 +366,13 @@ public class UserController {
 		List<String> errorList = new ArrayList<String>(); 
 		try {
 			users = userService.getAllUsers(user, errorList);
+			logger.info(users);
 			theModel.addAttribute("theListOFUSeer",users);
 		} catch (Exception e) {
 			logger.info("Exception occuerd at Get StundetLIST CONTROLLER ");
 		}
 		return "User/test";
 	}
-
 
 	@RequestMapping(value = "/logout",method = {RequestMethod.POST,RequestMethod.GET})
 	public String logoutUser(HttpSession session) {

@@ -227,7 +227,7 @@ function sendMailverification(){
 	obj.dataType= "application/json";
 	obj.requestData(function(responseData){
 		if(responseData.status == "OK" || responseData.status == "ok"){
-//			sendSuccessMailPopup(responseData);
+
 		swal({
 				  title: "Congrats !",
   				  text: responseData.message,
@@ -273,7 +273,7 @@ function checkPhoneNumber(){
 }
 
 function checkUserName(){
-//	console.log("Check phone is called")
+//	console.log("I am Called");
 	let phone = document.getElementById("userName").value;
 	var obj = new MasterAjax();
 	obj.requestType = "POST";
