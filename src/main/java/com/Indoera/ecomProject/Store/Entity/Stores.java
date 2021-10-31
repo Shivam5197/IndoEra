@@ -58,7 +58,6 @@ public class Stores {
 	private String storeAccountHolderName;
 	@Column(name="store_bank_number")
 	private String storeAccountNumber;
-
 	@Column(name = "store_bank_account_type")
 	private Integer bankAccountType;
 	
@@ -308,6 +307,7 @@ public class Stores {
                      +(storeName != null ? ",\"storeName\":\"" + storeName + "\" " : "")
                      +(uniqueStoreCode != null ? ",\"uniqueStoreCode\":\"" + uniqueStoreCode + "\" " : "")
                      +(storeDescription != null ? ",\"storeDescription\":\"" + storeDescription + "\" " : "")
+                     +(storeEmail != null ? ",\"storeEmail\":\"" + storeEmail + "\" " : "")
                      +(storeStatus != null ? ",\"storeStatus\":\"" + storeStatus + "\" " : "")
                      +(gstinNumber != null ? ",\"gstinNumber\":\"" + gstinNumber + "\" " : "")
                      +(sellerPanNumber != null ? ",\"sellerPanNumber\":\"" + sellerPanNumber + "\" " : "")
@@ -315,6 +315,7 @@ public class Stores {
                      +(country != null ? ",\"country\":\"" + country + "\" " : "")
                      +(state != null ? ",\"state\":\"" + state + "\" " : "")
                      +(city != null ? ",\"city\":\"" + city + "\" " : "")
+                     +(zipCode != null ? ",\"zipCode\":\"" + zipCode + "\" " : "")
                      +(address != null ? ",\"address\":\"" + address + "\" " : "")
                      +(logoURL != null ? ",\"logoURL\":\"" + logoURL + "\" " : "")
                      +(storeAccountHolderName != null ? ",\"storeAccountHolderName\":\"" + storeAccountHolderName + "\" " : "")

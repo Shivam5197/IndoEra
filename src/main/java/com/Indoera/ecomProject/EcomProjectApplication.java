@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class EcomProjectApplication {
 
 	private static final Logger logger = LogManager.getLogger(EcomProjectApplication.class);
-
 	
 	public static void main(String[] args) {
 		SpringApplication.run(EcomProjectApplication.class, args);

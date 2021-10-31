@@ -12,15 +12,11 @@ import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import com.Indoera.ecomProject.Store.Entity.Stores;
 import com.Indoera.ecomProject.Store.Entity.StoresDTO;
 import com.Indoera.ecomProject.Store.Service.StoreService;
@@ -82,7 +78,7 @@ public class StoreController {
 					if(user.getRole() == Constants.userRole.STOREOWNER) {
 						storeModal = new Stores(store);				
 						logopath = Utils.storeLogoPath(store.getLogoFile());
-						storeService.saveStore(storeModal,user,errorList,logopath);
+						storeService.saveUpdateStore(storeModal,user,errorList,logopath);
 						if(errorList.isEmpty() && !Utils.isNotNull(errorList)) {
 							apiResponse.setStatus(HttpStatus.OK);
 							apiResponse.setData(storeModal.toString());
@@ -105,10 +101,41 @@ public class StoreController {
 		return apiResponse;
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/updateStore/{storeId}", method = {RequestMethod.GET,RequestMethod.POST})
+	public APIResponseModal updateStoredetails(@PathVariable Integer storeId, @ModelAttribute StoresDTO storeDto, HttpSession session) {
 
+		logger.info("Update me aaya hu m Id lekr : " + storeId);	
+		logger.info("Update me aaya hu m updated details  lekr : " + storeDto);	
+		Stores storeModel = new Stores();
+		APIResponseModal apiResponseModel = new Utils().getDefaultApiResponse();
+		String logopath = "";
+		List<String> errorList = new ArrayList<>();
+		if(storeModel !=null) {
+			Users user = (Users) session.getAttribute("loggedInUser");
+			if(Utils.isNotNull(user)) {
+				if(user.getRole() == Constants.userRole.STOREOWNER) {
+					storeModel = new Stores(storeDto);		
+					storeModel.setId(storeId);
+					logopath = Utils.storeLogoPath(storeDto.getLogoFile());
+					storeService.saveUpdateStore(storeModel,user,errorList,logopath);
+					if(errorList.isEmpty() && !Utils.isNotNull(errorList)) {
+						apiResponseModel.setStatus(HttpStatus.OK);
+						apiResponseModel.setData(storeModel.toString());
+						apiResponseModel.setMessage("Store Saved Successfully !!");
+					}else {
+						apiResponseModel.setMessage("Failed to save store !!");
+					}
+				}else {
+					errorList.add("You are not registered with us as Seller");
+				}
+			}else {
+				errorList.add("Please login before Adding a Store");
+			}
+		}
+	return apiResponseModel;	
+	}
 	
-
-
 
 
 }
