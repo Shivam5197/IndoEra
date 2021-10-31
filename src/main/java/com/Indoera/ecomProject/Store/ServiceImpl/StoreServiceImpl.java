@@ -1,8 +1,10 @@
 package com.Indoera.ecomProject.Store.ServiceImpl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
@@ -81,82 +83,276 @@ public class StoreServiceImpl implements StoreService {
 
 
 
+//	@Override
+//	@Transactional
+//	public void saveUpdateStore(Stores storeModel, Users user, List<String> errorList, String logoPath) {
+//
+//		logger.info(storeModel.getId());
+//		if(storeModel.getId() != null) {
+//		Stores storeID = entityManager.find(Stores.class, storeModel.getId());
+//		logger.info("DO we have the ID : " + storeID);
+//		}
+//		
+//		try {
+//			if(Utils.isNotNull(user)) {
+//				if(Utils.isNotNull(storeModel.getStoreName()) && 
+//						Utils.isNotNull(storeModel.getStoreEmail()) &&
+//						Utils.isNotNull(storeModel.getAddress()) && 
+//						Utils.isNotNull(storeModel.getCity()) &&
+//						Utils.isNotNull(storeModel.getState()) &&
+//						Utils.isNotNull(storeModel.getZipCode())) {
+//
+//					if(storeModel.getProductSellCategory()==null && storeModel.getProductCategoryId()!=null) {
+//						storeModel.setProductSellCategory(entityManager.find(ProductsCategory.class,storeModel.getProductCategoryId()));
+//					}
+//
+//					if(Utils.isNotNull(logoPath)) {
+//						storeModel.setLogoURL(logoPath);
+//					}else {
+//						storeModel.setLogoURL(null);
+//					}
+//
+//					if(Utils.isNotNull(storeModel.getStoreDescription())) {
+//						storeModel.setStoreDescription(storeModel.getStoreDescription());
+//					}else {
+//						storeModel.setStoreDescription(null);
+//					}
+//					if(Utils.isNotNull(storeModel.getStoreAccountHolderName())) {
+//						storeModel.setStoreAccountHolderName(storeModel.getStoreAccountHolderName());
+//					}else {
+//						storeModel.setStoreAccountHolderName(null);
+//					}
+//					if(Utils.isNotNull(storeModel.getBankAccountType())) {
+//						storeModel.setBankAccountType(storeModel.getBankAccountType());
+//					}else {
+//						storeModel.setBankAccountType(null);
+//					}
+//					if(Utils.isNotNull(storeModel.getGstinNumber())) {
+//						storeModel.setGstinNumber(storeModel.getGstinNumber());//Encryption code should be implemented
+//					}else {
+//						storeModel.setGstinNumber(null);
+//					}
+//					if(Utils.isNotNull(storeModel.getStoreAccountNumber())) {
+//						storeModel.setStoreAccountNumber(storeModel.getStoreAccountNumber()); //Encryption code should be implemented
+//					}else {
+//						storeModel.setStoreAccountNumber(null);
+//					}
+//					if(Utils.isNotNull(storeModel.getSellerPanNumber())) {
+//						storeModel.setSellerPanNumber(storeModel.getSellerPanNumber());
+//					}else {
+//						storeModel.setSellerPanNumber(null);
+//					}
+//					storeModel.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
+//					storeModel.setStoreOwner(user);
+//					storeModel.setUniqueStoreCode(storeModel.getStoreName().substring(0,2)+Utils.RandomAlphaString());
+//					storeModel.setStoreStatus(Constants.storeStatus.OPEN);
+//					storeModel.setCountry("India");
+//
+//					entityManager.merge(storeModel);
+//				}else {
+//					errorList.add("Please Enter Required Data");
+//					logger.info("Something is missing");
+//				}
+//			}else {
+//				errorList.add("Session timed out Please Login agian !!");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			logger.info("================================ Exception Handeled In SAVEUPDATESTORE Method =====================================================" );
+//			logger.info(e.getMessage());
+//			logger.info("================================ Exception Handeled In SAVEUPDATESTORE Method =====================================================" );
+//			
+//		}finally {
+//			logger.info("Store Saved Successfully!!");
+//		}		
+//	}
+
 	@Override
 	@Transactional
-	public void saveStore(Stores store, Users user, List<String> errorList, String logoPath) {
+	public void saveUpdateStore(Stores storeModel, Users user, List<String> errorList, String logoPath) {
+		logger.info("Store Model :   : "+storeModel);
+//		logger.info(storeModel.getId());
+		if(storeModel.getId() != null) {
+		logger.info("DO we have the ID : " + storeModel.getId());
+		}
+		Stores storetoSaveUpdate = new Stores();
 		try {
 			if(Utils.isNotNull(user)) {
-				if(Utils.isNotNull(store.getStoreName()) && 
-						Utils.isNotNull(store.getStoreEmail()) &&
-						Utils.isNotNull(store.getAddress()) && 
-						Utils.isNotNull(store.getCity()) &&
-						Utils.isNotNull(store.getState()) &&
-						Utils.isNotNull(store.getZipCode())) {
+				if(Utils.isNotNull(storeModel)) {
+					if (Utils.isNotNull(storeModel.getId())) {
+						/* Store To Update will come here */
+						storetoSaveUpdate = entityManager.find(Stores.class, storeModel.getId());
+						/*	Store Name & Product sell category cannot be changed so no need to update it */ 
+						
+						if(Utils.isNotNull(storeModel.getStoreEmail())) {
+							storetoSaveUpdate.setStoreEmail(storeModel.getStoreEmail());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setStoreEmail(storetoSaveUpdate.getStoreEmail());
+						}
+						
+						if(Utils.isNotNull(logoPath)) {
+							storetoSaveUpdate.setLogoURL(logoPath);
+						}else {
+							storetoSaveUpdate.setLogoURL(storetoSaveUpdate.getLogoURL());
+						}
+						
+						if(Utils.isNotNull(storeModel.getStoreDescription())) {
+							storetoSaveUpdate.setStoreDescription(storeModel.getStoreDescription());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setStoreDescription(storetoSaveUpdate.getStoreDescription());
+						}
 
-					if(store.getProductSellCategory()==null && store.getProductCategoryId()!=null) {
-						store.setProductSellCategory(entityManager.find(ProductsCategory.class,store.getProductCategoryId()));
+						if(Utils.isNotNull(storeModel.getZipCode())) {
+							storetoSaveUpdate.setZipCode(storeModel.getZipCode());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setZipCode(storetoSaveUpdate.getZipCode());
+						}
+
+//						if(Utils.isNotNull(storeModel.getZipCode())) {
+//							storetoSaveUpdate.setZipCode(storeModel.getZipCode());
+//						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+//							storetoSaveUpdate.setZipCode(storetoSaveUpdate.getZipCode());
+//						}
+
+						if(Utils.isNotNull(storeModel.getCity())) {
+							storetoSaveUpdate.setCity(storeModel.getCity());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setCity(storeModel.getCity());
+						}
+
+						if(Utils.isNotNull(storeModel.getState())) {
+							storetoSaveUpdate.setState(storeModel.getState());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setState(storetoSaveUpdate.getState());
+						}
+
+						if(Utils.isNotNull(storeModel.getAddress())) {
+							storetoSaveUpdate.setAddress(storeModel.getAddress());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setAddress(storetoSaveUpdate.getAddress());
+						}
+
+						if(Utils.isNotNull(storeModel.getBankAccountType())) {
+							storetoSaveUpdate.setBankAccountType(storeModel.getBankAccountType());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setBankAccountType(storetoSaveUpdate.getBankAccountType());
+						}
+
+						if(Utils.isNotNull(storeModel.getStoreAccountHolderName())) {
+							storetoSaveUpdate.setStoreAccountHolderName(storeModel.getStoreAccountHolderName());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setStoreAccountHolderName(storetoSaveUpdate.getStoreAccountHolderName());
+						}
+
+						if(Utils.isNotNull(storeModel.getSellerPanNumber())) {
+							storetoSaveUpdate.setSellerPanNumber(storeModel.getSellerPanNumber());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setSellerPanNumber(storetoSaveUpdate.getSellerPanNumber());
+						}
+
+						if(Utils.isNotNull(storeModel.getStoreAccountNumber())) {
+							storetoSaveUpdate.setStoreAccountNumber(storeModel.getStoreAccountNumber());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setStoreAccountNumber(storetoSaveUpdate.getStoreAccountNumber());
+						}
+						
+						if(Utils.isNotNull(storeModel.getGstinNumber())) {
+							storetoSaveUpdate.setGstinNumber(storeModel.getGstinNumber());
+						}else {//No changes will be made if the storeModel is empty Just to be sure we are saving the fetched details from the already saved store
+							storetoSaveUpdate.setGstinNumber(storeModel.getGstinNumber());
+						}
+						
+						//After this It will be merged in DataBAse
+					}else {
+						logger.info("Store Model In Else PArt  :   : "+storeModel);
+
+						/* New Store To Be Created */ 
+						if(Utils.isNotNull(storeModel.getStoreName()) && 
+						Utils.isNotNull(storeModel.getStoreEmail()) &&
+						Utils.isNotNull(storeModel.getAddress()) && 
+						Utils.isNotNull(storeModel.getCity()) &&
+						Utils.isNotNull(storeModel.getState()) &&
+						Utils.isNotNull(storeModel.getZipCode())) {
+
+					storetoSaveUpdate.setStoreName(storeModel.getStoreName());		
+					storetoSaveUpdate.setStoreEmail(storeModel.getStoreEmail());		
+					storetoSaveUpdate.setCity(storeModel.getCity());
+					storetoSaveUpdate.setAddress(storeModel.getAddress());
+					storetoSaveUpdate.setState(storeModel.getState());
+					storetoSaveUpdate.setZipCode(storeModel.getZipCode());
+					
+					if(storeModel.getProductSellCategory()==null && storeModel.getProductCategoryId()!=null) {
+						storetoSaveUpdate.setProductSellCategory(entityManager.find(ProductsCategory.class,storeModel.getProductCategoryId()));
 					}
-
+					
 					if(Utils.isNotNull(logoPath)) {
-						store.setLogoURL(logoPath);
+						storetoSaveUpdate.setLogoURL(logoPath);
 					}else {
-						store.setLogoURL(null);
+						storetoSaveUpdate.setLogoURL(null);
 					}
 
-					if(Utils.isNotNull(store.getStoreDescription())) {
-						store.setStoreDescription(store.getStoreDescription());
+					if(Utils.isNotNull(storeModel.getStoreDescription())) {
+						storetoSaveUpdate.setStoreDescription(storeModel.getStoreDescription());
 					}else {
-						store.setStoreDescription(null);
+						storetoSaveUpdate.setStoreDescription(null);
 					}
-					if(Utils.isNotNull(store.getStoreAccountHolderName())) {
-						store.setStoreAccountHolderName(store.getStoreAccountHolderName());
+					if(Utils.isNotNull(storeModel.getStoreAccountHolderName())) {
+						storetoSaveUpdate.setStoreAccountHolderName(storeModel.getStoreAccountHolderName());
 					}else {
-						store.setStoreAccountHolderName(null);
+						storetoSaveUpdate.setStoreAccountHolderName(null);
 					}
-					if(Utils.isNotNull(store.getBankAccountType())) {
-						store.setBankAccountType(store.getBankAccountType());
+					if(Utils.isNotNull(storeModel.getBankAccountType())) {
+						storetoSaveUpdate.setBankAccountType(storeModel.getBankAccountType());
 					}else {
-						store.setBankAccountType(null);
+						storetoSaveUpdate.setBankAccountType(null);
 					}
-					if(Utils.isNotNull(store.getGstinNumber())) {
-						store.setGstinNumber(encrept.encrypt(store.getGstinNumber() ));//Key Related Issues will come from Here
+					if(Utils.isNotNull(storeModel.getGstinNumber())) {
+						storetoSaveUpdate.setGstinNumber(storeModel.getGstinNumber());//Encryption code should be implemented
 					}else {
-						store.setGstinNumber(null);
+						storetoSaveUpdate.setGstinNumber(null);
 					}
-					if(Utils.isNotNull(store.getStoreAccountNumber())) {
-						store.setStoreAccountNumber(encrept.encrypt(store.getStoreAccountNumber() ));//Key Related Issues will come from Here
+					if(Utils.isNotNull(storeModel.getStoreAccountNumber())) {
+						storetoSaveUpdate.setStoreAccountNumber(storeModel.getStoreAccountNumber()); //Encryption code should be implemented
 					}else {
-						store.setStoreAccountNumber(null);
+						storetoSaveUpdate.setStoreAccountNumber(null);
 					}
-					if(Utils.isNotNull(store.getSellerPanNumber())) {
-						store.setSellerPanNumber(store.getSellerPanNumber());
+					if(Utils.isNotNull(storeModel.getSellerPanNumber())) {
+						storetoSaveUpdate.setSellerPanNumber(storeModel.getSellerPanNumber());
 					}else {
-						store.setSellerPanNumber(null);
+						storetoSaveUpdate.setSellerPanNumber(null);
 					}
-					store.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
-					store.setStoreOwner(user);
-					store.setUniqueStoreCode(store.getStoreName().substring(0,2)+Utils.RandomAlphaString());
-					store.setStoreStatus(Constants.storeStatus.OPEN);
-					store.setCountry("India");
-
-					entityManager.merge(store);
+					storetoSaveUpdate.setAddedAt(new java.sql.Timestamp(System.currentTimeMillis()));
+					storetoSaveUpdate.setStoreOwner(user);
+					storetoSaveUpdate.setUniqueStoreCode(storeModel.getStoreName().substring(0,2)+Utils.RandomAlphaString());
+					storetoSaveUpdate.setStoreStatus(Constants.storeStatus.OPEN);
+					storetoSaveUpdate.setCountry("India");
 				}else {
 					errorList.add("Please Enter Required Data");
 					logger.info("Something is missing");
 				}
+					}
+					
+				}else {
+					errorList.add(" WOO..HOO - Session Expired !! Please Sign In Again !!!");
+				}
 			}else {
-				errorList.add("Session timed out Please Login agian !!");
+				errorList.add(" WOO..HOO - Session Expired !! Please Sign In Again !!!");
 			}
+		
+			entityManager.merge(storetoSaveUpdate);
 		} catch (Exception e) {
 			e.printStackTrace();
-
-		}finally {
-			logger.info("Store Saved Successfully!!");
+			errorList.add("Someting Went Wrong. Please Try after some time !!!");
+			logger.info("================================ Exception Handeled In SAVEUPDATESTORE Method =====================================================" );
+			logger.info(e.getMessage());
+			logger.info("================================ Exception Handeled In SAVEUPDATESTORE Method =====================================================" );
+			
 		}		
 	}
 
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Stores> getAllStores() {
@@ -178,19 +374,6 @@ public class StoreServiceImpl implements StoreService {
 				
 				Query query = entityManager.createQuery("Select s FROM Stores s WHERE s.id !=0 AND s.storeOwner ="+ user.getId());
 				storesList = query.getResultList();	
-				
-//				
-//				if(Utils.isNotNull(storesList)) {
-//					Stores gsting = null;
-//					for(int i=0;i<storesList.size();i++) {
-//					gsting = storesList.get(i);
-//					String gst =	gsting.getGstinNumber();
-//					String clarifiedGST = encrept.decrypt(gst);
-//					gsting.setGstinNumber(clarifiedGST);
-//					}
-//					logger.info("----   "+gsting);
-//					
-//				}				
 			}else {
 				errorList.add("Request Timed out !! Please try to login again");
 			}
@@ -200,6 +383,27 @@ public class StoreServiceImpl implements StoreService {
 			errorList.add("Something went wrong!! We are looking into it. Please try after sometime");
 		}
 		return storesList;
+	}
+
+	@Override
+	@Transactional
+	public Stores getStoreDetails(Users user,Integer storeId,List<String> errorList) {
+		Stores store = null;
+		try {
+			if(Utils.isNotNull(user)) {
+				if(Utils.isNotNull(storeId)) {
+				 store = entityManager.find(Stores.class, storeId);
+				}else {
+					errorList.add("Store not Found");
+				}
+			}else {
+				errorList.add("Please Sign in to Continue!!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorList.add("Something went Wrong Please try agter some time !!");
+		}
+		return store;
 	}
 
 

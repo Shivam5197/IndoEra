@@ -233,7 +233,7 @@ left: 20vw;
 			
 			<div class="col-md-2">
 				<div class="sidebar" id="sidebar">
-					<div class="logo_content">
+<!-- 					<div class="logo_content">
 						<div class="logo">
 							<h8>Total Orders : 500 <br>
 							</h8>
@@ -269,7 +269,93 @@ left: 20vw;
 							</ul>
 						</div>
 					</div>
-				</div>
+ -->	
+ 
+ 
+ 
+         <nav id="sidebar">
+            <div class="sidebar-header">
+                <h8>Total Orders : 500 <br>
+                </h8>
+                <h8>Total Profit : 500 <br>
+                </h8>
+                <h8>Total Saved : 500 <br>
+                </h8>
+            </div>
+    
+          
+            <ul class="list-unstyled components">
+                <li>
+                <a href=""><i class="fas fa-th"></i> <span
+                    class="links_name">Dashboard</span> </a>
+                </li>
+                <li>
+                    <a href=""><i class="fas fa-user-friends"></i> <span
+                        class="links_name">Users</span> </a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fas fa-comment-alt"></i> <span
+                            class="links_name">Messages</span>  </a>
+                        </li>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-bug"></i>Reports</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Report 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Report 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Report 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a onclick="storesListUI();"><i class="fas fa-store"></i>
+                        <span class="links_name">Store</span> </a> 
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-shopping-cart"></i> <span
+                        class="links_name">Orders</span></a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-heart"></i> <span
+                        class="links_name">Saved</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-cog"></i> <span
+                        class="links_name">Settings</span> </a>
+                </li>
+            </ul>
+        </nav>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 			</div>
 			</div>
 
 			<div class="col-md-10">
